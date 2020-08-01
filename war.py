@@ -68,13 +68,12 @@ class Player:
 
 
 #############################################################
-three_cloves = Card("Clubs", "Three")
-new_deck = Deck()
-new_deck.shuffle()
-mycard = new_deck.deal_one()
-arpan = Player("Arpan")
-arpan.add_card([mycard, mycard, mycard])
-print(arpan)
+# three_cloves = Card("Clubs", "Three")
+
+# mycard = new_deck.deal_one()
+# arpan = Player("Arpan")
+# arpan.add_card([mycard, mycard, mycard])
+# print(arpan)
 
 
 # for card in new_deck.all_cards:
@@ -82,3 +81,79 @@ print(arpan)
 
 
 # print(three_cloves.value)
+#
+'''
+Game logic:-  At first we have to create two players using player class the we create a deck of cards and shuffle ,after that we have to divide 26 cards to each player . After that we will we 
+set an while loop game_on while game on is true the game will continue inside the while check contineoulsy about no cards each player has whwn one player has zero cards then that player will and other will win and the game_on will be turn to false and will break out of the loop
+
+Evaluation:-
+
+
+'''
+player_one = Player("ONE")
+player_two = Player("TWO")
+
+new_deck = Deck()
+new_deck.shuffle()
+
+
+# Dividing the cards between two players
+
+for i in range(26):
+    player_one.add_card(new_deck.deal_one())
+    player_two.add_card(new_deck.deal_one())
+
+game_on = True
+rounds = 0
+while game_on:
+    rounds += 1
+    print(f'{rounds} are played')
+
+    if(len(player_one.all_cards) == 0):
+        print('Player has no cards left')
+        print('Player Two has won')
+        game_on = False
+        break
+
+    if(len(player_two.all_cards) == 0):
+        print('Player has no cards left')
+        print('Player Two has won')
+        game_on = False
+        break
+    # round
+    player_one_cards = []
+    player_two_cards = []
+
+    player_one_cards.append(player_one.remove_card())
+    player_two_cards.append(player_two.remove_card())
+
+    war = True
+
+    while war:
+        if(player_one_cards[-1].value > player_two_cards[-1].value):
+            print('PLAYER ONE HAS WON THIS ROUND')
+            player_one.add_card(player_one_cards)
+            player_one.add_card(player_two_cards)
+            war = False
+        elif(player_two_cards[-1].value > player_one_cards[-1].value):
+            print('PLAYER TWO HAS WON THIS ROUND')
+            player_two.add_card(player_one_cards)
+            player_two.add_card(player_two_cards)
+            war = False
+        else:
+            print('WAR!!!!!!!!!!')
+            if (len(player_one.all_cards) < 10):
+                print('unable to play has less cards')
+                print('PLAYER TWO HAS WON')
+                game_on = False
+                break
+            elif (len(player_two.all_cards) < 10):
+                print('unable to play has less cards')
+                print('PLAYER ONE HAS WON')
+                game_on = False
+                break
+
+            else:
+                for i in range(10):
+                    player_one_cards.append(player_one.remove_card())
+                    player_two_cards.append(player_two.remove_card())
